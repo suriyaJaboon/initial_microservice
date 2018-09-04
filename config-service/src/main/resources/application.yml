@@ -1,0 +1,20 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: /usr/src/app/service-yml
+#          uri: /home/tom/IdeaProjects/Micro/service-yml
+#        native:
+#          search-locations: classpath:/share
+#  profiles:
+#    active: native
+  security:
+    user:
+#      password: ${CONFIG_SERVICE_PASSWORD}
+      password: softnix

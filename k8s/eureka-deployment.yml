@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka
+  labels:
+    app: eureka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka
+  template:
+    metadata:
+      labels:
+        app: eureka
+    spec:
+      containers:
+      - name: eureka
+        image: eureka:1
+        ports:
+        - containerPort: 8090
+          protocol: TCP
+        # volumeMounts:
+          # - name:  service-yml 
+            # mountPath: "/usr/src/app/service-yml"
+            # readOnly: true
+        # resources:
+          # limits:
+            # cpu: 200m
+            # memory: 200Mi
+          # requests:
+            # cpu: 100m
+            # memory: 100Mi
+      # volumes:
+        # - name: service-yml
+          # hostPath: 
+            # path: "/home/tom/IdeaProjects/Micro/service-yml"
+      # restartPolicy: Always

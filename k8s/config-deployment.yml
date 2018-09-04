@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config
+  labels:
+    app: config
+    # run: config
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config
+  template:
+    metadata:
+      labels:
+        app: config
+        # run: config
+    spec:
+      containers:
+      - name: config
+        image: config:1
+        ports:
+        - containerPort: 8888
+          protocol: TCP
+        volumeMounts:
+          - name:  service-yml 
+            mountPath: "/usr/src/app/service-yml"
+            readOnly: true
+        # resources:
+          # limits:
+            # cpu: 200m
+            # memory: 200Mi
+          # requests:
+            # cpu: 100m
+            # memory: 100Mi
+      volumes:
+        - name: service-yml
+          hostPath: 
+            path: "/home/tom/IdeaProjects/Micro/service-yml"
+            
+      restartPolicy: Always

@@ -1,0 +1,74 @@
+version: '3'
+services:
+    config:
+        build: ./config-service
+        container_name: config
+        hostname: config
+        ports:
+          - 8888:8888
+        networks:
+          - microservicesnet
+        volumes:
+          # - ${HOME}/IdeaProjects/Micro/service-yml:/usr/src/app/service-yml:z
+          - ${HOME}/IdeaProjects/Micro/service-yml:/usr/src/app/service-yml:ro
+
+    eureka:
+        build: ./eureka-server
+        container_name: eureka
+        hostname: eureka
+        ports:
+          - 8090:8090
+        networks:
+          - microservicesnet
+        depends_on:
+          - config
+        links:
+          - config
+
+    gateway:
+        build: ./gateway-service
+        container_name: gateway
+        hostname: gateway
+        ports:
+          - 8091:8091
+        networks:
+          - microservicesnet
+        links:
+          - config
+          - eureka
+        depends_on:
+          - config
+          - eureka
+
+    query:
+        build: ./query-service
+        container_name: query
+        hostname: query
+        ports:
+          - 8092:8092
+        networks:
+          - microservicesnet
+        links:
+          - config
+          - eureka
+        depends_on:
+          - config
+          - eureka
+
+    search:
+        build: ./search-service
+        container_name: search
+        hostname: search
+        ports:
+          - 8093:8093
+        networks:
+          - microservicesnet
+        links:
+          - config
+          - eureka
+        depends_on:
+          - config
+          - eureka
+
+networks:
+  microservicesnet:

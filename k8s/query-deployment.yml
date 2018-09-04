@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: query
+  labels:
+    app: query
+    # run: config-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: query
+  template:
+    metadata:
+      labels:
+        app: query
+        # run: query
+    spec:
+      containers:
+      - name: query
+        image: query:1
+        ports:
+        - containerPort: 8092
+          protocol: TCP
+        # volumeMounts:
+          # - name:  service-yml 
+            # mountPath: "/usr/src/app/service-yml"
+            # readOnly: true
+        # resources:
+          # limits:
+            # cpu: 200m
+            # memory: 200Mi
+          # requests:
+            # cpu: 100m
+            # memory: 100Mi
+      # volumes:
+        # - name: service-yml
+          # hostPath: 
+            # path: "/home/tom/IdeaProjects/Micro/service-yml"
+      # restartPolicy: Always
